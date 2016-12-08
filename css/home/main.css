@@ -1,0 +1,9 @@
+.color-legend {
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+    margin: 3px;
+}
+#myColorsLegend {
+    margin: 10px 40px 40px 40px;
+}

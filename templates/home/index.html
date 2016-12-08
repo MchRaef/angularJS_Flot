@@ -1,0 +1,99 @@
+<div class="panel panel-info">
+
+    <div class="panel-heading text-center">Select CSV File</div>
+    <div class="panel-body">
+        <div class="form-group">
+            <input class="form-control pad marg" type="file" id="file" name="file" accept=".csv"/>
+            <Button ng-click="home.receiveFile()"
+                    class="btn btn-info form-control pad">Submit
+            </Button>
+        </div>
+        <div class="alert alert-danger alert-dismissible" ng-show="home.noFile">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error!</strong> No File was Selected.
+        </div>
+        <div class="alert alert-danger alert-dismissible" ng-show="home.notCSV">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error!</strong> Select Only CSV Files.
+        </div>
+        <div class="alert alert-info alert-dismissible" ng-show="home.nothingHappened">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Info:</strong> If you clicked the button and nothing happened, please click again. Sometimes,
+            it takes time to load the CSV file.
+        </div>
+    </div>
+
+</div>
+<div class="panel panel-info" ng-show="home.csvSet">
+
+    <div class="panel-heading text-center">Configure Axis</div>
+    <div class="panel-body">
+        <div class="form-group">
+            <div class="pad marg">
+                <h4> Select the X axis:</h4>
+                <label class="radio-inline" ng-repeat="column in home.columns">
+                    <input type="radio" ng-click="home.xAxis = column.header" name="x-axis">{{column.header}}</label>
+                <br><br>
+                <input id="timeChckBox" type="checkbox" value="" ng-model="home.isTime"> <label for="timeChckBox"><i>Check
+                if the X axis correnspond to the time</i>.</label>
+                <br><br>
+                <p><label for="timeFormat"> Specify the datetime format (optional) [%Y for year, %m for Month, %d for
+                    day, %H
+                    for hours (24 format) and %I for hours (12 format), %M for minutes, $S for seconds, %L for
+                    milliseconds, and %p for AM/PM</label></p>
+                <input type="text" id="timeFormat" name="d3DateTimeFormat" ng-model="home.d3DateTimeFormat"
+                       class="form-control" placeholder="%m/%d/%Y %H:%M:%S">
+            </div>
+            <hr>
+            <div class="pad marg">
+                <h4> Check the Y axes:</h4>
+                <label class="checkbox-inline" ng-repeat="column in home.columns">
+                    <input type="checkbox" value="" ng-model="column.selected">{{column.header}}
+                </label>
+            </div>
+            <Button ng-click="home.prepareData()"
+                    class="btn btn-info form-control pad">Draw Chart
+            </Button>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <label class="radio-inline">
+            <input type="radio" ng-click="home.chart = 'd3'" name="chart" disabled>Draw with D3</label>
+        <label class="radio-inline">
+            <input type="radio" ng-click="home.chart = 'flot'" name="chart" checked>Draw with Flot</label>
+        <label class="radio-inline">
+            <input type="radio" ng-click="home.chart = 'dimple'" name="chart" disabled>Draw with Dimple</label>
+    </div>
+</div>
+<div class="canvas" id="canvas">
+
+</div>
+<div id="myColorsLegend">
+
+
+</div>
+<div class="panel panel-primary" ng-show="home.showGraph">
+    <div class="panel-body">
+        <div ng-show="home.flotGraph">
+            <label for="selectionClass">Insert the class of your selection here: <input id="selectionClass"
+                                                                                        ng-model="home.class"
+                                                                                        type="text"></label>
+            <button class="btn btn-primary" ng-disabled="!home.selectionExist || !home.class.length>0"
+                    ng-click="home.submitClass()">Submit Class
+            </button>
+            <button class="btn btn-danger" ng-click="home.clearClasses()">Clear all classes</button>
+            <br>
+            <button id="clearSelection" class="btn btn-warning">Clear selection</button>
+            <button id="zoomOut" ng-click="home.prepareData()" class="btn btn-warning">Zoom out</button>
+            <label><input id="zoom" type="checkbox"> Zoom to selection.</label>
+            <button class="btn btn-success pull-right" ng-click="home.saveCSV()">Save CSV</button>
+        </div>
+    </div>
+</div>
+{{home.selectionExist}}
+<!--<div class="panel panel-primary" ng-show="home.gpsExist">-->
+<!--<div class="panel-body">-->
+<div id="map" style="width:100%;height:500px"></div>
+<!--</div>-->
+<!--</div>-->
+
