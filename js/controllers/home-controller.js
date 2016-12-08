@@ -235,6 +235,8 @@
                 placeholder.bind("plotselected", function (event, ranges) {
 
                     var zoom = $("#zoom").prop("checked");
+                    that.selectionFrom = parseInt(ranges.xaxis.from.toFixed(1));
+                    that.selectionTo = parseInt(ranges.xaxis.to.toFixed(1));
 
                     if (zoom) {
                         $.each(that.flotPlot.getXAxes(), function (_, axis) {
@@ -246,8 +248,6 @@
                         that.flotPlot.draw();
                         that.flotPlot.clearSelection();
                     } else {
-                        that.selectionFrom = parseInt(ranges.xaxis.from.toFixed(1));
-                        that.selectionTo = parseInt(ranges.xaxis.to.toFixed(1));
                         if (that.selectionPolyline)
                             that.selectionPolyline.setMap(null);
                         if (that.gpsExist)
